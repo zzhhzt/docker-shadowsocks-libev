@@ -63,14 +63,13 @@ RUN set -ex \
 COPY --from=golang /go/src/github.com/teddysun/v2ray-plugin/v2ray-plugin /usr/local/bin
 
 # Shadowsocks environment variables
-ENV SERVER_PORT 8388
-ENV PASSWORD ChangeMe!!!
+ENV SERVER_PORT 443
+ENV PASSWORD 234234
 ENV METHOD chacha20-ietf-poly1305
-ENV TIMEOUT 86400
-ENV DNS_ADDRS 1.1.1.1,1.0.0.1,2606:4700:4700::1111,2606:4700:4700::1001
+ENV TIMEOUT 300
 ENV ARGS -u
 
-EXPOSE $SERVER_PORT/tcp $SERVER_PORT/udp
+EXPOSE $SERVER_PORT/tcp
 
 # Run as nobody
 USER nobody
@@ -83,7 +82,6 @@ CMD exec ss-server \
     -k $PASSWORD \
     -m $METHOD \
     -t $TIMEOUT \
-    -d $DNS_ADDRS \
     --reuse-port \
     --no-delay \
     $ARGS
